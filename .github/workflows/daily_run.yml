@@ -1,0 +1,27 @@
+name: Daily Pump Engine Run
+
+on:
+  schedule:
+    - cron: "0 1 * * *"   # 08.00 WIB
+  workflow_dispatch:
+
+jobs:
+  run-engine:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas
+
+      - name: Run daily engine
+        run: |
+          python scripts/run_daily.py
